@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.SyncStateContract.Helpers.insert
 import android.view.View
 import android.view.Window
 import android.widget.Button
@@ -23,8 +24,7 @@ import com.google.android.material.snackbar.Snackbar
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
-    lateinit var builder: Builder
-    lateinit var viewModel:viewModel
+//    lateinit var viewModel:viewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         val dao=DbModel.getInstance(applicationContext).dbDao()
         val repossitory=Repository(dao)
-        viewModel=ViewModelProvider(this,viewModelFactory(repossitory)).get(viewModel::class.java)
+        val viewModel=ViewModelProvider(this,viewModelFactory(repossitory))[viewModel::class.java]
 
         binding.check.setOnClickListener {
             DialogBox(this,
@@ -43,36 +43,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }).show()
         }
-
-
-    }
-
-    var selectedIndex=0
-
-    private fun showSnakebar(msg:String){
-        Snackbar.make(binding.root,msg,Snackbar.LENGTH_SHORT).show()
-    }
-
-    fun showConfirmationDialog(view: View) {
-
-        val ringtone= arrayOf("None","yoyo","Sunrise","Yhaha vaha","Happy morning","Homecoming","Thithi","Legend","Horor")
-        var selectItem=ringtone[selectedIndex]
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Phone Ringtone")
-            .setSingleChoiceItems(ringtone,selectedIndex){dialog,which->
-                selectedIndex=which
-                selectItem=ringtone[which]
-
-            }
-            .setPositiveButton("Yes"){dialog,which->
-                showSnakebar("$selectItem selected")
-            }
-            .setNeutralButton("Cancel"){dialog,which->
-
-            }
-            .setNegativeButton("Cancel"){dialog,which->
-
-            }
-            .show()
     }
 }

@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class viewModel(val repository: Repository):ViewModel()
+class viewModel(var repository: Repository):ViewModel()
 {
 
     fun insert(item:Model)= CoroutineScope(Dispatchers.IO).launch {
