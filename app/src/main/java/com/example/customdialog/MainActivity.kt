@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 override fun addItemClicked(item: Model) {
                     viewModel.insert(item)
                 }
-            })
+            }).show()
         }
 
 
