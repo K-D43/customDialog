@@ -12,11 +12,14 @@ abstract class DbModel: RoomDatabase() {
 
     companion object{
 
+        @Volatile
         private var INSTANCE:DbModel?=null
 
         fun getInstance(context: Context):DbModel{
             if(INSTANCE==null){
-                INSTANCE= Room.databaseBuilder(context,DbModel::class.java,"databaseForName").build()
+                synchronized(this){
+                    INSTANCE= Room.databaseBuilder(context,DbModel::class.java,"databaseForName").build()
+                }
             }
             return INSTANCE!!
         }

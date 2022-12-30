@@ -1,9 +1,9 @@
 package com.example.customdialog.db
 
-class Repository(private var db:DbModel) {
+class Repository(private var dao:DBdao) {
 
     fun insert(item:Model){
-        db.dbDao().insert(item)
+        dao.insert(item)
     }
 
 }

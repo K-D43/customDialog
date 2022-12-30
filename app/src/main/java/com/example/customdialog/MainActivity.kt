@@ -12,8 +12,11 @@ import android.view.Window
 import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.DrawableRes
+import androidx.lifecycle.ViewModelProvider
 import com.example.customdialog.databinding.ActivityMainBinding
+import com.example.customdialog.db.DbModel
 import com.example.customdialog.db.Model
+import com.example.customdialog.db.Repository
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
@@ -27,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val dao=DbModel.getInstance(applicationContext).dbDao()
+        val repossitory=Repository(dao)
+        viewModel=ViewModelProvider(this,viewModelFactory(repossitory)).get(viewModel::class.java)
 
         binding.check.setOnClickListener {
             DialogBox(this,
